@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_2048/controls.dart';
 import 'package:flutter_2048/providers.dart';
+import 'package:flutter_2048/utils/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GameOverScreen extends ConsumerStatefulWidget {
@@ -15,46 +13,35 @@ class GameOverScreen extends ConsumerStatefulWidget {
 class _GameOverScreenState extends ConsumerState<GameOverScreen> {
   Key key = UniqueKey();
 
-  void restart() {
-    setState(() {
-      key = UniqueKey();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Game Over'),
-      ),
+      backgroundColor: backgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
               'Game Over',
-              style: TextStyle(fontSize: 30),
+              style: TextStyle(fontSize: 40),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                restart();
-                resetGrid(ref);
-              },
-              child: const Text('Restart'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: boardColor,
+              ),
+              onPressed: () => resetGrid(ref),
+              child: const Text(
+                'Restart',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-}
-
-resetGrid(WidgetRef ref) {
-  ref.watch(listProvider.notifier).state = generateNewGrid();
-  ref.watch(highScoreProvider.notifier).state =
-      max(ref.watch(highScoreProvider), ref.watch(scoreProvider));
-  ref.watch(scoreProvider.notifier).state = 0;
-  ref.watch(gameOverProvider.notifier).state = false;
-  ref.watch(gameWonProvider.notifier).state = false;
 }
