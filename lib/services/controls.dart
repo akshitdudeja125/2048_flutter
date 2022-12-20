@@ -175,7 +175,7 @@ Tuple5<int, int, int, List<List<int>>, List<List<int>>> moveLeftAndMerge(
         if (k - 1 > -1 && newGrid[k - 1][j] == newGrid[k][j]) {
           newGrid[k - 1][j] *= 2;
           score += newGrid[k - 1][j];
-          newGrid[k][i] = 0;
+          newGrid[k][j] = 0;
         }
       }
     }
