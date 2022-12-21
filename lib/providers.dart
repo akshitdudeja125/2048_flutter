@@ -18,6 +18,7 @@ resetGrid(WidgetRef ref) {
   ref.watch(highScoreProvider.notifier).state =
       max(ref.watch(highScoreProvider), ref.watch(scoreProvider));
   ref.watch(scoreProvider.notifier).state = 0;
+  ref.watch(previousScoreProvider.notifier).state = 0;
   ref.watch(gameOverProvider.notifier).state = false;
   ref.watch(gameWonProvider.notifier).state = false;
 }
