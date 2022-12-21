@@ -60,105 +60,109 @@ class _HomePageState extends ConsumerState<HomePage>
         ],
       );
     } else {
-      return GestureDetector(
-        onHorizontalDragEnd: (DragEndDetails details) {
-          if (details.primaryVelocity! < 0) {
-            result = moveLeftAndMerge(
-                score, highScore, previousScore, grid, previousGrid);
-          } else if (details.primaryVelocity! > 0) {
-            result = moveRightAndMerge(
-                score, highScore, previousScore, grid, previousGrid);
-          } else {
-            result =
-                Tuple5(score, highScore, previousScore, grid, previousGrid);
-          }
-          changeStates(ref, result, grid);
-        },
-        onVerticalDragEnd: (DragEndDetails details) {
-          if (details.primaryVelocity! < 0) {
-            result = moveUpAndMerge(
-                score, highScore, previousScore, grid, previousGrid);
-          } else if (details.primaryVelocity! > 0) {
-            result = moveDownAndMerge(
-                score, highScore, previousScore, grid, previousGrid);
-          } else {
-            result =
-                Tuple5(score, highScore, previousScore, grid, previousGrid);
-          }
-          changeStates(ref, result, grid);
-        },
-        child: Screenshot(
-          controller: _screenshotController,
-          child: Scaffold(
-            backgroundColor: backgroundColor,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        '2048',
-                        style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 50.0,
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Row(
-                            children: const [
-                              ScoreBoard(),
-                            ],
+      return SafeArea(
+        child: GestureDetector(
+          onHorizontalDragEnd: (DragEndDetails details) {
+            if (details.primaryVelocity! < 0) {
+              result = moveLeftAndMerge(
+                  score, highScore, previousScore, grid, previousGrid);
+            } else if (details.primaryVelocity! > 0) {
+              result = moveRightAndMerge(
+                  score, highScore, previousScore, grid, previousGrid);
+            } else {
+              result =
+                  Tuple5(score, highScore, previousScore, grid, previousGrid);
+            }
+            changeStates(ref, result, grid);
+          },
+          onVerticalDragEnd: (DragEndDetails details) {
+            if (details.primaryVelocity! < 0) {
+              result = moveUpAndMerge(
+                  score, highScore, previousScore, grid, previousGrid);
+            } else if (details.primaryVelocity! > 0) {
+              result = moveDownAndMerge(
+                  score, highScore, previousScore, grid, previousGrid);
+            } else {
+              result =
+                  Tuple5(score, highScore, previousScore, grid, previousGrid);
+            }
+            changeStates(ref, result, grid);
+          },
+          child: Screenshot(
+            controller: _screenshotController,
+            child: Scaffold(
+              backgroundColor: backgroundColor,
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '2048',
+                          style: TextStyle(
+                            color: textColor,
+                            fontWeight: FontWeight.bold,
+                            // fontSize: 50.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.10,
                           ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: const [
+                                ScoreBoard(),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomButton(
+                          icon: const Icon(Icons.share),
+                          onPressed: () =>
+                              takeScreenShot(_screenshotController)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CustomButton(
+                              icon: const Icon(Icons.refresh),
+                              onPressed: () {
+                                ref.watch(listProvider.notifier).state =
+                                    previousGrid;
+                                ref.watch(scoreProvider.notifier).state =
+                                    previousScore;
+                              }),
+                          const SizedBox(width: 20.0),
+                          CustomButton(
+                            icon: const Icon(
+                                Icons.settings_backup_restore_rounded),
+                            onPressed: () => resetGrid(ref),
+                          )
                         ],
                       )
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CustomButton(
-                        icon: const Icon(Icons.share),
-                        onPressed: () => takeScreenShot(_screenshotController)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CustomButton(
-                            icon: const Icon(Icons.refresh),
-                            onPressed: () {
-                              ref.watch(listProvider.notifier).state =
-                                  previousGrid;
-                              ref.watch(scoreProvider.notifier).state =
-                                  previousScore;
-                            }),
-                        const SizedBox(width: 20.0),
-                        CustomButton(
-                          icon:
-                              const Icon(Icons.settings_backup_restore_rounded),
-                          onPressed: () => resetGrid(ref),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 16.0),
-                GenerateBoard(
-                  board: grid,
-                ),
-              ],
+                  const SizedBox(height: 16.0),
+                  GenerateBoard(
+                    board: grid,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

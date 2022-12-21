@@ -24,17 +24,18 @@ class ScoreCard extends StatelessWidget {
       child: Column(children: [
         Text(
           label.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 18.0,
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).size.width * 0.05,
+            // fontSize: 18.0,
             color: textColor,
           ),
         ),
         Text(
           score,
-          style: const TextStyle(
+          style: TextStyle(
             color: textColorWhite,
             fontWeight: FontWeight.bold,
-            fontSize: 18.0,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
           ),
         )
       ]),
