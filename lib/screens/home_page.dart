@@ -102,14 +102,17 @@ class _HomePageState extends ConsumerState<HomePage>
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
                           '2048',
                           style: TextStyle(
                             color: textColor,
                             fontWeight: FontWeight.bold,
-                            // fontSize: 50.0,
-                            fontSize: MediaQuery.of(context).size.width * 0.10,
+                            fontSize:
+                                MediaQuery.of(context).size.width * 0.12 < 40.0
+                                    ? MediaQuery.of(context).size.width * 0.12
+                                    : 40.0,
                           ),
                         ),
                         Column(

@@ -25,7 +25,9 @@ class ScoreCard extends StatelessWidget {
         Text(
           label.toUpperCase(),
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width * 0.05,
+            fontSize: MediaQuery.of(context).size.width * 0.05 < 20
+                ? MediaQuery.of(context).size.width * 0.05
+                : 20,
             // fontSize: 18.0,
             color: textColor,
           ),
@@ -35,7 +37,9 @@ class ScoreCard extends StatelessWidget {
           style: TextStyle(
             color: textColorWhite,
             fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).size.width * 0.04,
+            fontSize: MediaQuery.of(context).size.width * 0.04 < 20
+                ? MediaQuery.of(context).size.width * 0.04
+                : 19,
           ),
         )
       ]),
